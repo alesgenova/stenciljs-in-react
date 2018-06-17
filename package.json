@@ -1,0 +1,19 @@
+{
+  "name": "stenciljs-in-react",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1",
+    "react-scripts": "1.1.4",
+    "@openchemistry/molecule-moljs": "^0.0.7",
+    "@openchemistry/sample-data": "^0.0.5"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "postinstall": "cp -R node_modules/@openchemistry/molecule-moljs/dist public/molecule-moljs"
+  }
+}
