@@ -1,10 +1,21 @@
 # Stencil components in React
 
-[Stencil](https://stenciljs.com/) is not a JS framework. It is a compiler that produces a reusable web component that can be used anywhere else.
+[Stencil](https://stenciljs.com/) is not a JS framework. It is a compiler that produces a reusable web component that can be embedded anywhere else.
 
 This is a step by step guide to consume a non-trivial stencil component in a [React](https://reactjs.org/) app.
 
-The starter react app was created with create-react-app
+The starter react app was created with [create-react-app](https://github.com/facebook/create-react-app).
+
+## Similar guides
+- [Stencil components in Vue](https://github.com/alesgenova/stenciljs-in-vue.git)
+- [Stencil components in Angular](https://github.com/alesgenova/stenciljs-in-angular.git)
+
+## Table of contents
+- [Add the component to the dependencies](#1-add-the-component-to-the-dependencies)
+- [Load the component](#2-load-the-component)
+- [Consume the component](#3-consume-the-component)
+- [Appendix: Attribute vs Prop](#appendix-attribute-vs-prop)
+
 
 ## 0: Build a stenciljs component and publish it to npm
 Creating your first stencil component is very easy and it is well documented [here](https://stenciljs.com/docs/my-first-component). 
@@ -35,13 +46,13 @@ In order to have the component code bundled with the app, we need to copy the `d
   }
 ```
 
-## 3: Load component code
+## 2: Load the component
 Now that the component code is in the `public/molecule-moljs` folder, you can add the following to the `public/index.html` file.
 ```html
 <script src="molecule-moljs/molecule-moljs.js"></script>
 ```
 
-## 2: Consuming the component
+## 3: Consume the component
 You can now use the tag provided by the stencil component in the `render` function of any react component.
 
 ```jsx
