@@ -20,9 +20,12 @@ The starter react app was created with [create-react-app](https://github.com/fac
 ## 0: Build a stenciljs component and publish it to npm
 Creating your first stencil component is very easy and it is well documented [here](https://stenciljs.com/docs/my-first-component). 
 
-This example will consume the [@openchemistry/molecule-moljs](https://github.com/OpenChemistry/oc-web-components/tree/master/packages/molecule-moljs) component.
+This example will consume two components:
+- [@openchemistry/molecule-vtkjs](https://github.com/OpenChemistry/oc-web-components/tree/master/packages/molecule-vtkjs) : To display molecular structures
+- [split-me](https://github.com/alesgenova/split-me) : To create resizable split layouts.
 
-## 1: Add the component to the dependencies
+
+## 1: Add the component(s) to the dependencies
 
 Add the component to the app dependencies in `package.json`
 
@@ -31,25 +34,19 @@ Add the component to the app dependencies in `package.json`
 
 "dependencies": {
   ...
-  "@openchemistry/molecule-moljs": "^0.0.7"
+  "@openchemistry/molecule-vtkjs": "^0.1.9",
+  "split-me": "^0.3.1"
 }
 ```
 
-In order to have the component code bundled with the app, copy the `dist/` folder of the component into the `public/` folder of the app. This can be automated by adding a `postinstall` command.
+## 2: Import the component(s)
+Import the component in the `index.js` of the app:
+```js
+import { defineCustomElements as defineMolecule } from '@openchemistry/molecule-vtkjs';
+import { defineCustomElements as defineSplitMe } from 'split-me';
 
-```json
-// package.json
-
-"scripts": {
-    ...
-    "postinstall": "cp -R node_modules/@openchemistry/molecule-moljs/dist public/molecule-moljs"
-  }
-```
-
-## 2: Load the component
-Now that the component code is in the `public/molecule-moljs` folder, add the following to the `public/index.html` file.
-```html
-<script src="molecule-moljs/molecule-moljs.js"></script>
+defineMolecule(window);
+defineSplitMe(window);
 ```
 
 ## 3: Consume the component
@@ -58,7 +55,10 @@ It is now possible to use the tag provided by the stencil component in the `rend
 ```jsx
 render() {
     return (
-      <oc-molecule-moljs></oc-molecule-moljs>
+      <split-me n="2">
+        <oc-molecule-moljs slot="0"></oc-molecule-moljs>
+        <oc-molecule-moljs slot="1"></oc-molecule-moljs>
+      </split-me>
     )
 }
 ```
@@ -81,40 +81,56 @@ React doesn't provide a convenient way to distinguish between attribute and prop
 
 It just boils down to saving a reference to the element of the stencil component, and then set the property directly in the javascript code.
 
-Here is the full code to do it:
+To make this operation easier, it can be convenient to create a reusable utility function [`wc`](https://github.com/ionic-team/ionic-react-conference-app/blob/master/src/utils/stencil.js).
 
+```js
+export function wc(customEvents = {}, props = {}) {
+  let storedEl;
+
+  return function (el) {
+    for (let name in customEvents) {
+      let value = customEvents[name] ;
+      // If we have an element then add event listeners
+      // otherwise remove the event listener
+      const action = (el) ? el.addEventListener : storedEl.removeEventListener;
+      if (typeof value === 'function') {
+        action(name, value);
+        return;
+      }
+    }
+    
+    // If we have an element then set props
+    if (el) {
+      for (let name in props) {
+        let value = props[name] ;
+        el[name] = value;
+      }
+    }
+    storedEl = el;
+  };
+}
+```
+
+And then use it in the `jsx` to bind events and properties to the webcomponent this way:
 ```jsx
 import React, { Component } from 'react';
+import { wc } from './utils/webcomponent';
 
 class SomeComponent extends Component {
-
-  componentRef = null;
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      molecule: {
-        /* Big complex object goes here */
-      };
-    }
-  }
-
-  componentDidMount() {
-    this._setWcProps();
-  }
-
-  componentDidUpdate(){
-    this._setWcProps();
-  }
-
-  _setWcProps(){
-    this.componentRef.cjson = this.state.molecule;
-  }
 
   render() {
     return (
       <div style={{width: "100%", height: "20rem", position: "relative"}}>
-        <oc-molecule-moljs ref={ (node) => this.componentRef = node }/>
+        <oc-molecule-vtkjs
+          ref={wc(
+            // Events
+            {},
+            // Props
+            {
+              cjson: molecule
+            }
+          )}
+        />
       </div>
     );
   }
