@@ -22,7 +22,7 @@ Creating your first stencil component is very easy and it is well documented [he
 
 This example will consume two components:
 - [@openchemistry/molecule-vtkjs](https://github.com/OpenChemistry/oc-web-components/tree/master/packages/molecule-vtkjs) : To display molecular structures
-- [split-me](https://github.com/alesgenova/split-me) : To create resizable split layouts.
+- [split-me](https://github.com/alesgenova/split-me) : To create resizable split layouts
 
 
 ## 1: Add the component(s) to the dependencies
@@ -56,26 +56,19 @@ It is now possible to use the tag provided by the stencil component in the `rend
 render() {
     return (
       <split-me n="2">
-        <oc-molecule-moljs slot="0"></oc-molecule-moljs>
-        <oc-molecule-moljs slot="1"></oc-molecule-moljs>
+        <oc-molecule-vtkjs slot="0"></oc-molecule-vtkjs>
+        <oc-molecule-vtkjs slot="1"></oc-molecule-vtkjs>
       </split-me>
     )
 }
 ```
 
 ## Appendix: Attribute vs Prop
-`oc-molecule-moljs` has a property named `cjson` that expects an object (or a JSON.stringified object).
+`oc-molecule-vtkjs` has a property named `cjson` that expects an object (or a JSON.stringified object).
 
-Strings can be passed directly as attributes to a stencil component.
-```jsx
-render() {
-    return (
-      <oc-molecule-moljs cjson={JSON.stringify(this.state.molecule)}></oc-molecule-moljs>
-    )
-}
-```
+Strings and numbers can be passed directly as attributes to a stencil component.
 
-While this would work, it is probably a good idea to avoid the `JSON.stringify()` and `JSON.parse()` and directly pass the object itself to the component.
+One way to pass a complex object to a component could be to `JSON.stringify()` the object and then `JSON.parse()` it inside the component. But this round trip can be expensive, and it would be a good idea to pass the object directly as a prop.
 
 React doesn't provide a convenient way to distinguish between attribute and prop, so a little work is needed to achieve this.
 
