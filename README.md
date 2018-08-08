@@ -11,8 +11,8 @@ The starter react app was created with [create-react-app](https://github.com/fac
 - [Stencil components in Angular](https://github.com/alesgenova/stenciljs-in-angular.git)
 
 ## Table of contents
-- [Add the component to the dependencies](#1-add-the-component-to-the-dependencies)
-- [Load the component](#2-load-the-component)
+- [Add the component(s) to the dependencies](#1-add-the-components-to-the-dependencies)
+- [Import the component](#2-import-the-components)
 - [Consume the component](#3-consume-the-component)
 - [Appendix: Attribute vs Prop](#appendix-attribute-vs-prop)
 
