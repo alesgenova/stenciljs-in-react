@@ -2,12 +2,12 @@
   "name": "stenciljs-in-react",
   "version": "1.0.0",
   "dependencies": {
-    "@openchemistry/molecule-vtkjs": "^0.1.9",
-    "@openchemistry/sample-data": "^0.3.3",
-    "react": "^16.4.2",
-    "react-dom": "^16.4.2",
-    "react-scripts": "1.1.4",
-    "split-me": "^0.3.1"
+    "@openchemistry/molecule-vtkjs": "^0.3.2",
+    "@openchemistry/sample-data": "^0.3.8",
+    "react": "^16.6.1",
+    "react-dom": "^16.6.1",
+    "react-scripts": "2.1.1",
+    "split-me": "^1.1.4"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -27,5 +27,11 @@
     "react",
     "javascript",
     "typescript"
+  ],
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
   ]
 }

@@ -34,16 +34,16 @@ Add the component to the app dependencies in `package.json`
 
 "dependencies": {
   ...
-  "@openchemistry/molecule-vtkjs": "^0.1.9",
-  "split-me": "^0.3.1"
+  "@openchemistry/molecule-vtkjs": "^0.3.2",
+  "split-me": "^1.1.4"
 }
 ```
 
 ## 2: Import the component(s)
 Import the component in the `index.js` of the app:
 ```js
-import { defineCustomElements as defineMolecule } from '@openchemistry/molecule-vtkjs';
-import { defineCustomElements as defineSplitMe } from 'split-me';
+import { defineCustomElements as defineMolecule } from '@openchemistry/molecule-vtkjs/dist/loader';
+import { defineCustomElements as defineSplitMe } from 'split-me/dist/loader';
 
 defineMolecule(window);
 defineSplitMe(window);
